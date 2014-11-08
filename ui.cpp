@@ -18,8 +18,8 @@ Ui::Ui(QWidget* parent)
     port			= new QSpinBox(this);
     connect			= new QPushButton("Connect", this);
     port->setRange(1, 32767);
-    port->setValue(6667);
-    serverIp->setText("127.0.0.1");
+    port->setValue(4242);
+    serverIp->setText("89.3.81.154");
     top->addWidget(label, 0, 0);
     top->addWidget(serverIp, 0, 1);
     top->addWidget(port, 0, 2);

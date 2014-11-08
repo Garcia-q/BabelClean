@@ -7,7 +7,8 @@ DEPENDPATH += .
 INCLUDEPATH += .
 HEADERS += ui.h \
     comtcp.h \
-    buffer.h
+    buffer.h \
+    Protocol.h
 SOURCES += main.cpp ui.cpp \
     comtcp.cpp \
     buffer.cpp

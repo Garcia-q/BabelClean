@@ -1,4 +1,5 @@
 #include "comtcp.h"
+#include <iostream>
 
 ComTcp::ComTcp(QObject *parent) :
     QObject(parent)
@@ -10,10 +11,12 @@ ComTcp::ComTcp(QObject *parent) :
 
 
 void ComTcp::connectToServer() {
-    QHostAddress ipAddress;
+    QHostAddress    ipAddress;
 
     ipAddress.setAddress(ip);
+    std::cout << "Trying to connect to the server !" << std::endl;
     socket->connectToHost(ipAddress, port);
+    std::cout << "Socket responded : " << getState() << std::endl;
 
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
     connect(socket, SIGNAL(connected()), this, SLOT(successConnect()));
@@ -22,6 +25,7 @@ void ComTcp::connectToServer() {
 }
 
 void ComTcp::disconnectFromServer() {
+    std::cout << "Disconnected from the server" << std::endl;
     socket->disconnectFromHost();
 }
 
@@ -44,18 +48,20 @@ enum QAbstractSocket::SocketState ComTcp::getState() const {
 }
 
 void ComTcp::readyRead() {
-/*
-    buffer.clear();
-    buffer = socket->readAll();
-    if (buffer.size() > 0)
-        std::cout << "Message : " << buffer.data() << std::endl;
-*/
+    QByteArray yolo;
+
+    yolo = socket->readAll();
+    if (yolo.size() > 0) {
+        std::cout << yolo.data() << std::endl;
+    }
 }
 
 void ComTcp::successConnect() {
+    std::cout << "Sucessfully connected!" << std::endl;
     emit clientConnected();
 }
 
 void ComTcp::successDisconnect() {
+    std::cout << "Sucessfully disconnected!" << std::endl;
     emit clientDisconnected();
 }
