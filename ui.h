@@ -17,7 +17,7 @@ public:
     ~Ui();
     void setServer(ComTcp*);
 
-private slots:
+public slots:
     void setConnected();
     void setDisconnected();
     void toggleConnection();

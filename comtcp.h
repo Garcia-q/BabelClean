@@ -14,22 +14,23 @@ private:
     QByteArray buffer;
     QString     ip;
     quint16     port;
-    int        isConnected;
-private slots:
+public slots:
     void readyRead();
-    void setConnected();
-    void setDisconnected();
+    void successConnect();
+    void successDisconnect();
+
+signals:
+    void clientConnected();
+    void clientDisconnected();
 
 public:
     explicit ComTcp(QObject *parent = 0);
     void sendData(const QByteArray);
     void setIp(const QString);
     void setPort(quint16);
-    bool getConnection();
     void connectToServer();
     void disconnectFromServer();
     enum QAbstractSocket::SocketState getState() const;
-    int amIConnected();
 };
 
 #endif // COMTCP_H

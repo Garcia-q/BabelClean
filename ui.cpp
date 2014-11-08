@@ -24,13 +24,16 @@ Ui::Ui(QWidget* parent)
     top->addWidget(serverIp, 0, 1);
     top->addWidget(port, 0, 2);
     top->addWidget(connect, 1, 2);
-
+    server = new ComTcp();
 
     main->addLayout(top);
 
     setLayout(main);
 
     parent->connect(connect, SIGNAL(clicked()), this, SLOT(toggleConnection()));
+    parent->connect(server, SIGNAL(clientConnected()), this, SLOT(setConnected()));
+    parent->connect(server, SIGNAL(clientDisconnected()), this, SLOT(setDisconnected()));
+
     setDisconnected();
 }
 

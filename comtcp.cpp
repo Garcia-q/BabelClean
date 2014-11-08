@@ -3,7 +3,6 @@
 ComTcp::ComTcp(QObject *parent) :
     QObject(parent)
 {
-    isConnected = false;
     socket = new QTcpSocket(this);
     ip = "127.0.0.1";
     port = 8888;
@@ -15,7 +14,11 @@ void ComTcp::connectToServer() {
 
     ipAddress.setAddress(ip);
     socket->connectToHost(ipAddress, port);
+
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    connect(socket, SIGNAL(connected()), this, SLOT(successConnect()));
+    connect(socket, SIGNAL(disconnected()), this, SLOT(successDisconnect()));
+
 }
 
 void ComTcp::disconnectFromServer() {
@@ -40,16 +43,6 @@ enum QAbstractSocket::SocketState ComTcp::getState() const {
     return socket->state();
 }
 
-int ComTcp::amIConnected() {
-    return (isConnected);
-}
-
-void ComTcp::setConnected() {
-}
-
-void ComTcp::setDisconnected() {
-}
-
 void ComTcp::readyRead() {
 /*
     buffer.clear();
@@ -57,4 +50,12 @@ void ComTcp::readyRead() {
     if (buffer.size() > 0)
         std::cout << "Message : " << buffer.data() << std::endl;
 */
+}
+
+void ComTcp::successConnect() {
+    emit clientConnected();
+}
+
+void ComTcp::successDisconnect() {
+    emit clientDisconnected();
 }
